@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        /* Styles personnalisés pour la page d'accueil */
+        h1 {
+            color: #333;
+        }
+
+        ul.product-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.product-list li {
+            margin-bottom: 10px;
+        }
+
+        a.create-product {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        a.create-product:hover {
+            background-color: #555;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur la page d'accueil !</h1>
+
+    <h2>Liste des produits :</h2>
+    <ul class="product-list">
+        {% for product in products %}
+            <li>{{ product.title|upper }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_product_new') }}" class="create-product">Créer un produit</a>
+{% endblock %}

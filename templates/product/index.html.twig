@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        /* Styles personnalisés pour la page de liste des produits */
+        h1 {
+            color: #333;
+        }
+
+        table.table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.table th,
+        table.table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        table.table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+
+        a.product-action {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        a.product-action:hover {
+            background-color: #555;
+        }
+
+        span.reserved-label {
+            background-color: #f00;
+            color: #fff;
+            padding: 5px;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <h1>Consulter tous les produits</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>City</th>
+                <th>Postal_code</th>
+                <th>Reservation_text</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for product in products|slice(0, 15)|reverse %}
+    <tr>
+        <td>{{ product.id }}</td>
+        <td>
+            {{ product.title|upper }}
+            {% if product.isReserved() %}
+                <span class="reserved-label">Réservé</span>
+            {% endif %}
+        </td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.city }}</td>
+        <td>{{ product.postalCode }}</td>
+        <td>{{ product.reservationText }}</td>
+        <td>
+            <a href="{{ path('app_product_show', {'id': product.id}) }}" class="product-action">Consulter ce produit</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="8">No records found</td>
+    </tr>
+{% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}
